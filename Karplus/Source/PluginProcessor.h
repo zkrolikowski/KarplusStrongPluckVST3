@@ -9,6 +9,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "SynthAudioSource.h"
 
 //==============================================================================
 /**
@@ -53,9 +54,11 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    float noteOnVel;
+	SynthAudioSource& getSynth();
 
 private:
+
+	SynthAudioSource synth;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KarplusAudioProcessor)

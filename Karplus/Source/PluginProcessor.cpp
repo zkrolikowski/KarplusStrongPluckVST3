@@ -93,14 +93,12 @@ void KarplusAudioProcessor::changeProgramName (int index, const juce::String& ne
 //==============================================================================
 void KarplusAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+	synth.prepareToPlay(samplesPerBlock, sampleRate);
 }
 
 void KarplusAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
+	synth.releaseResources();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -150,12 +148,7 @@ void KarplusAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
-
-        // ..do something to the data...
-    }
+	synth.getNextAudioBlock(buffer, midiMessages);
 }
 
 //==============================================================================
@@ -188,4 +181,9 @@ void KarplusAudioProcessor::setStateInformation (const void* data, int sizeInByt
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new KarplusAudioProcessor();
+}
+
+SynthAudioSource& KarplusAudioProcessor::getSynth()
+{
+	return synth;
 }
