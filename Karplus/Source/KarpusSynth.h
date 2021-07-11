@@ -28,8 +28,10 @@ public:
 	void pitchWheelMoved(int) override {}
 	void controllerMoved(int, int) override {}
 
+	void setDecayRate(float newDecay);
 
 private:
+	float decay;                  // Rate at witch decay happens
 	Pluck<float> pluck;           // Filter to generate samples
 	float startOfPluck[INIT_POW]; // Inital burst of energy for pluck
 	int sampleNumber;			  // Number of samples generated

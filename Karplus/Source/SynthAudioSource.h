@@ -22,8 +22,10 @@ public:
 	void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) override;
 	void getNextAudioBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages);
 
+	void setDecayRate(float newDecay);
 
 private:
+
 	juce::Synthesiser synth;
 	//juce::MidiKeyboardState& state;
 };

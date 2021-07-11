@@ -8,7 +8,7 @@
 /******************************************************************************/
 #include "KarpusSynth.h"
 
-KarpusSynth::KarpusSynth() : pluck(static_cast<float>(getSampleRate())), sampleNumber(101) {}
+KarpusSynth::KarpusSynth() : pluck(static_cast<float>(getSampleRate())), sampleNumber(101), decay(0.999f) {}
 
 bool KarpusSynth::canPlaySound(juce::SynthesiserSound* sound)
 {
@@ -20,8 +20,7 @@ void KarpusSynth::startNote(int midiNoteNumber, float velocity,
 {
 	// TODO learn move sematices
 	// Create new pluck componet for give midi note value
-																//TODO add costom slider to change decay value
-	pluck.StartNote(static_cast<float>(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber)), 0.999f);
+	pluck.StartNote(static_cast<float>(juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber)), decay);
 
 	// Generate inial "engery burst/string pluck" 
 	for (int i = 0; i < INIT_POW; ++i)
@@ -94,4 +93,9 @@ void KarpusSynth::renderNextBlock(juce::AudioSampleBuffer& buffer, int startSamp
 //			}
 //		}
 //	}
+}
+
+void KarpusSynth::setDecayRate(float newDecay)
+{
+	decay = newDecay;
 }

@@ -9,6 +9,9 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+#define WINDOWWIDTH 640
+#define WINDOWHEIGHT 480
+
 //==============================================================================
 KarplusAudioProcessorEditor::KarplusAudioProcessorEditor (KarplusAudioProcessor& p)
     : AudioProcessorEditor (&p), 
@@ -16,11 +19,20 @@ KarplusAudioProcessorEditor::KarplusAudioProcessorEditor (KarplusAudioProcessor&
 	  keyboardComponent(keyboardState, juce::MidiKeyboardComponent::horizontalKeyboard)
 {
 
-	addAndMakeVisible(keyboardComponent);
+	//addAndMakeVisible(keyboardComponent);
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (600, 160);
+    setSize(WINDOWWIDTH, WINDOWHEIGHT);
+
+    decayRate.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
+    decayRate.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
+    decayRate.setRange(0.999, 0.999999);
+    decayRate.setValue(0.99993);
+    decayRate.setNumDecimalPlacesToDisplay(6);
+    decayRate.setSkewFactor(10);
+    addAndMakeVisible(&decayRate);
+    decayRate.onValueChange = [this] { audioProcessor.getSynth().setDecayRate(static_cast<float>(decayRate.getValue())); };
 
    /* midiVolume.setSliderStyle(juce::Slider::LinearBarVertical);
     midiVolume.setRange(0.0, 127.0, 1.0);
@@ -41,7 +53,7 @@ KarplusAudioProcessorEditor::~KarplusAudioProcessorEditor()
 void KarplusAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    //g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
     //g.setColour (juce::Colours::white);
     //g.setFont (15.0f);
@@ -54,10 +66,16 @@ void KarplusAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     //midiVolume.setBounds(40, 30, 20, getHeight() - 60);
-	keyboardComponent.setBounds(10, 10, getWidth() - 20, getHeight() - 20);
+	//keyboardComponent.setBounds(10, 10, getWidth() - 20, getHeight() - 20);
+
+    const int border = 20;
+    const float scaleWidth = getWidth() / static_cast<float>(WINDOWWIDTH);
+    const float scaleHeight = getHeight() / static_cast<float>(WINDOWHEIGHT);
+
+    decayRate.setBounds(40 * scaleWidth, 80 * scaleHeight, 150 * scaleWidth, 150 * scaleHeight);
 }
 
-void KarplusAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
-{
-
-}
+//void KarplusAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
+//{
+//
+//}

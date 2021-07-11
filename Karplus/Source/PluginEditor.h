@@ -14,8 +14,8 @@
 //==============================================================================
 /**
 */
-class KarplusAudioProcessorEditor  : public juce::AudioProcessorEditor,
-                                     private juce::Slider::Listener
+class KarplusAudioProcessorEditor  : public juce::AudioProcessorEditor/*,
+                                     private juce::Slider::Listener*/
 {
 public:
     KarplusAudioProcessorEditor (KarplusAudioProcessor&);
@@ -26,12 +26,12 @@ public:
     void resized() override;
 
 private:
-    void sliderValueChanged(juce::Slider* slider) override;
+    //void sliderValueChanged(juce::Slider* slider) override;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     KarplusAudioProcessor& audioProcessor;
 
-    juce::Slider midiVolume;
+    juce::Slider decayRate;                         // The rate at witch the pluck fliter will decay
 	juce::MidiKeyboardState keyboardState;
 	juce::MidiKeyboardComponent keyboardComponent;
 

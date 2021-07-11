@@ -38,3 +38,15 @@ void SynthAudioSource::getNextAudioBlock(const juce::AudioSourceChannelInfo& buf
 
 	getNextAudioBlock(*bufferToFill.buffer, incomingMidi);
 }
+
+void SynthAudioSource::setDecayRate(float newDecay)
+{
+	for (int i = synth.getNumVoices(); --i >= 0;)
+	{
+		if (KarpusSynth* voice = dynamic_cast<KarpusSynth*>(synth.getVoice(i)))
+		{
+			voice->setDecayRate(newDecay);
+		}
+	}
+
+}
