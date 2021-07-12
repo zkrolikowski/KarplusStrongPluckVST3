@@ -15,18 +15,25 @@
 class SynthAudioSource : public juce::AudioSource
 {
 public:
-	SynthAudioSource(/*juce::MidiKeyboardState& state*/);
+	SynthAudioSource();
 
 	void prepareToPlay(int /*samplesPerBlackExpected*/, double sampleRate) override;
 	void releaseResources() override;
 	void getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill) override;
 	void getNextAudioBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages);
 
-	void setDecayRate(float newDecay);
+	void setAttack(float newAttack);
+	void setDecay(float newDecay);
+	void setSustain(float newSustain);
+	void setRelease(float release);
 
 private:
 
+	void updateADSR();
+
 	juce::Synthesiser synth;
+	juce::ADSR::Parameters adsrParamerteres;
+	
 	//juce::MidiKeyboardState& state;
 };
 

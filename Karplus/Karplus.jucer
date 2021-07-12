@@ -6,6 +6,15 @@
               pluginManufacturer="Zack">
   <MAINGROUP id="ekX6gw" name="Kurplus Strong Pluck">
     <GROUP id="{103066BC-32ED-4110-1018-2B3439C6E69A}" name="Source">
+      <FILE id="iZWkoA" name="AllPass.h" compile="0" resource="0" file="Source/AllPass.h"/>
+      <FILE id="scPhX3" name="KarpusSynth.cpp" compile="1" resource="0" file="Source/KarpusSynth.cpp"/>
+      <FILE id="RpxACB" name="KarpusSynth.h" compile="0" resource="0" file="Source/KarpusSynth.h"/>
+      <FILE id="SyteK0" name="LowPass.h" compile="0" resource="0" file="Source/LowPass.h"/>
+      <FILE id="QYbYiD" name="Pluck.h" compile="0" resource="0" file="Source/Pluck.h"/>
+      <FILE id="JAlI8n" name="SynthAudioSource.cpp" compile="1" resource="0"
+            file="Source/SynthAudioSource.cpp"/>
+      <FILE id="ApgWOk" name="SynthAudioSource.h" compile="0" resource="0"
+            file="Source/SynthAudioSource.h"/>
       <FILE id="lwV9Mq" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="oaOIQZ" name="PluginProcessor.h" compile="0" resource="0"

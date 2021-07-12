@@ -28,13 +28,14 @@ public:
 	void pitchWheelMoved(int) override {}
 	void controllerMoved(int, int) override {}
 
-	void setDecayRate(float newDecay);
+	void updateADSR(const juce::ADSR::Parameters& newParameters);
 
 private:
-	float decay;                  // Rate at witch decay happens
+
 	Pluck<float> pluck;           // Filter to generate samples
 	float startOfPluck[INIT_POW]; // Inital burst of energy for pluck
 	int sampleNumber;			  // Number of samples generated
+	juce::ADSR adsr;              // ADSR to better contol the pluck filter
 };
 
 struct KarpusSound : public juce::SynthesiserSound

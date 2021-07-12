@@ -8,7 +8,12 @@
 /******************************************************************************/
 #include "KarpusSynth.h"
 
-KarpusSynth::KarpusSynth() : pluck(static_cast<float>(getSampleRate())), sampleNumber(101), decay(0.999f) {}
+constexpr float decay = 0.99999f;
+
+KarpusSynth::KarpusSynth() : pluck(static_cast<float>(getSampleRate())), sampleNumber(101)
+{
+	adsr.setSampleRate(getSampleRate());
+}
 
 bool KarpusSynth::canPlaySound(juce::SynthesiserSound* sound)
 {
@@ -27,13 +32,16 @@ void KarpusSynth::startNote(int midiNoteNumber, float velocity,
 	{							
 		startOfPluck[i] = (rand() / static_cast<float>(RAND_MAX)) * velocity;
 	}
-
+	
+	adsr.noteOn();
 	sampleNumber = 0;
 }
 
 
 void KarpusSynth::stopNote(float velocity, bool allowTailOff)
 {
+	adsr.noteOff();
+	// TODO rewrite to allow tails
 	clearCurrentNote();
 }
 
@@ -48,13 +56,18 @@ void KarpusSynth::renderNextBlock(juce::AudioSampleBuffer& buffer, int startSamp
 		else
 			currentSample = pluck(0);
 
+		currentSample *= adsr.getNextSample();
+
 		for (int i = buffer.getNumChannels() - 1; i >= 0; --i)
 			buffer.addSample(i, startSample, currentSample);
 		
 		++startSample;
 		++sampleNumber;
 	}
-//	if (angleDelta != 0.0)
+
+	//adsr.applyEnvelopeToBuffer(buffer, startSample, numSamples);
+
+	//	if (angleDelta != 0.0)
 //	{
 //		if (tailOff > 0.0) // [7]
 //		{
@@ -95,7 +108,7 @@ void KarpusSynth::renderNextBlock(juce::AudioSampleBuffer& buffer, int startSamp
 //	}
 }
 
-void KarpusSynth::setDecayRate(float newDecay)
+void KarpusSynth::updateADSR(const juce::ADSR::Parameters& newParameters)
 {
-	decay = newDecay;
+	adsr.setParameters(newParameters);
 }

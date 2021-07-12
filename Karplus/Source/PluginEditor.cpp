@@ -27,12 +27,12 @@ KarplusAudioProcessorEditor::KarplusAudioProcessorEditor (KarplusAudioProcessor&
 
     decayRate.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
     decayRate.setTextBoxStyle(juce::Slider::NoTextBox, true, 100, 25);
-    decayRate.setRange(0.999, 0.999999);
-    decayRate.setValue(0.99993);
+    decayRate.setRange(0, 10);
+    decayRate.setValue(3.2f);
     decayRate.setNumDecimalPlacesToDisplay(6);
-    decayRate.setSkewFactor(10);
+    //decayRate.setSkewFactor(10);
     addAndMakeVisible(&decayRate);
-    decayRate.onValueChange = [this] { audioProcessor.getSynth().setDecayRate(static_cast<float>(decayRate.getValue())); };
+    decayRate.onValueChange = [this] { audioProcessor.getSynth().setAttack(static_cast<float>(decayRate.getValue())); };
 
    /* midiVolume.setSliderStyle(juce::Slider::LinearBarVertical);
     midiVolume.setRange(0.0, 127.0, 1.0);
@@ -72,7 +72,10 @@ void KarplusAudioProcessorEditor::resized()
     const float scaleWidth = getWidth() / static_cast<float>(WINDOWWIDTH);
     const float scaleHeight = getHeight() / static_cast<float>(WINDOWHEIGHT);
 
-    decayRate.setBounds(40 * scaleWidth, 80 * scaleHeight, 150 * scaleWidth, 150 * scaleHeight);
+    decayRate.setBounds(static_cast<int>(40 * scaleWidth), 
+                        static_cast<int>(80 * scaleHeight), 
+                        static_cast<int>(150 * scaleWidth), 
+                        static_cast<int>(150 * scaleHeight));
 }
 
 //void KarplusAudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
