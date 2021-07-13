@@ -26,6 +26,7 @@ public:
 	void setDecay(float newDecay);
 	void setSustain(float newSustain);
 	void setRelease(float release);
+	void setVolume(float newVolume);
 
 private:
 
@@ -33,7 +34,8 @@ private:
 
 	juce::Synthesiser synth;
 	juce::ADSR::Parameters adsrParamerteres;
-	
+	float volume;
+
 	//juce::MidiKeyboardState& state;
 };
 

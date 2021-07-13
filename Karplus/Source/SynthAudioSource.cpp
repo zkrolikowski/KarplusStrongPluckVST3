@@ -72,6 +72,12 @@ void SynthAudioSource::setRelease(float newRelease)
 	updateADSR();
 }
 
+void SynthAudioSource::setVolume(float newVolume)
+{
+	volume = newVolume;
+	updateADSR();
+}
+
 void SynthAudioSource::updateADSR()
 {
 	for (int i = synth.getNumSounds(); --i >= 0;)
@@ -79,6 +85,7 @@ void SynthAudioSource::updateADSR()
 		if (KarpusSynth* voice = dynamic_cast<KarpusSynth*>(synth.getVoice(i)))
 		{
 			voice->updateADSR(adsrParamerteres);
+			voice->setVolume(volume);
 		}
 	}
 }

@@ -57,6 +57,7 @@ void KarpusSynth::renderNextBlock(juce::AudioSampleBuffer& buffer, int startSamp
 			currentSample = pluck(0);
 
 		currentSample *= adsr.getNextSample();
+		currentSample *= volume;
 
 		for (int i = buffer.getNumChannels() - 1; i >= 0; --i)
 			buffer.addSample(i, startSample, currentSample);
@@ -111,4 +112,9 @@ void KarpusSynth::renderNextBlock(juce::AudioSampleBuffer& buffer, int startSamp
 void KarpusSynth::updateADSR(const juce::ADSR::Parameters& newParameters)
 {
 	adsr.setParameters(newParameters);
+}
+
+void KarpusSynth::setVolume(float newVolume)
+{
+	volume = newVolume;
 }

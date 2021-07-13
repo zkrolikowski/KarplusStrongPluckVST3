@@ -29,6 +29,7 @@ public:
 	void controllerMoved(int, int) override {}
 
 	void updateADSR(const juce::ADSR::Parameters& newParameters);
+	void setVolume(float newVolume);
 
 private:
 
@@ -36,6 +37,7 @@ private:
 	float startOfPluck[INIT_POW]; // Inital burst of energy for pluck
 	int sampleNumber;			  // Number of samples generated
 	juce::ADSR adsr;              // ADSR to better contol the pluck filter
+	float volume;                 // Volume scaler for all samples
 };
 
 struct KarpusSound : public juce::SynthesiserSound

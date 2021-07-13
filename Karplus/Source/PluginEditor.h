@@ -26,12 +26,21 @@ public:
     void resized() override;
 
 private:
+
+    void setUpSlider(juce::Slider& slider, double rangeLow, double rangeHigh, double start, const juce::String& suffex);
+
     //void sliderValueChanged(juce::Slider* slider) override;
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     KarplusAudioProcessor& audioProcessor;
 
-    juce::Slider decayRate;                         // The rate at witch the pluck fliter will decay
+    juce::Slider attackRate;   // attack rate in seconds of adsr
+    juce::Slider decayRate;    // decay rate in seconds of adsr
+    juce::Slider sustainLevel; // sustaion level in ? ? of adsr // TO DO either change mouse over text, or give in dB and transle to linear gain 
+    juce::Slider relaseRate;   // relase rate in seconds of adsr
+    juce::Slider volume;       // Max output volume
+
+    // TODO
 	juce::MidiKeyboardState keyboardState;
 	juce::MidiKeyboardComponent keyboardComponent;
 
